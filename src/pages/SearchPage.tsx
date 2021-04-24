@@ -1,11 +1,12 @@
-import { useCallback, useRef } from "react";
+import { FormEvent, useCallback, useMemo, useRef } from "react";
 import { useHistory } from "react-router";
 import cssModule from "./SearchPage.module.scss";
 
 const SearchPage = () => {
   const history = useHistory();
   const inputRef = useRef<HTMLInputElement>(null);
-  const onClick = useCallback(() => {
+  const onSubmit = useCallback((event: FormEvent) => {
+    event.preventDefault();
     const employeeName = inputRef.current?.value;
     if (employeeName && employeeName.length > 0) {
       history.push(`/overview/${employeeName}`);
@@ -13,8 +14,10 @@ const SearchPage = () => {
   }, [history]);
   return (
     <div className={cssModule.container}>
-      <input type="text" ref={inputRef} />
-      <button {...{ onClick }}>Search</button>
+      <form onSubmit={onSubmit}>
+        <input type="text" ref={inputRef} />
+        <button type="submit">Search</button>
+      </form>
     </div>
   );
 };

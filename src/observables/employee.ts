@@ -1,5 +1,5 @@
 import { EMPTY, from } from "rxjs";
-import { catchError, map, mergeMap, scan } from "rxjs/operators";
+import { catchError, distinct, map, mergeMap, scan } from "rxjs/operators";
 import { getEmployee } from "../api/employee";
 import { distinctExpand } from "./operators";
 
@@ -29,6 +29,7 @@ export const getEmployeeGraph$ = (employeeName: string) => {
     distinctExpand((name) => {
       return getEmployeeSub$(name);
     }),
+    distinct(),
     scan((acc, name) => {
       return [...acc, name];
     }, [] as string[])

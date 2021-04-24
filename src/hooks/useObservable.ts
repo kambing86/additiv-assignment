@@ -25,9 +25,9 @@ function getInitialState<ReturnData, ErrorThrown = Error>(): ObserverState<
 export default function useObservable<ReturnData, ErrorThrown = Error>(
   initialObservable?: () => Observable<ReturnData>
 ): [
-  ObserverState<ReturnData, ErrorThrown>,
-  React.Dispatch<React.SetStateAction<Observable<ReturnData>>>
-] {
+    ObserverState<ReturnData, ErrorThrown>,
+    React.Dispatch<React.SetStateAction<Observable<ReturnData>>>
+  ] {
   const [observable, setObservable] = useState<
     Observable<ReturnData> | undefined
   >(initialObservable);
@@ -53,7 +53,7 @@ export default function useObservable<ReturnData, ErrorThrown = Error>(
       setState(getInitialState());
       subscription.unsubscribe();
     };
-  }, [observable, setState]);
+  }, [observable]);
 
   return [
     state,
